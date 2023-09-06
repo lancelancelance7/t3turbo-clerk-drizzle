@@ -1,4 +1,4 @@
-import { prisma } from "@acme/db";
+import { db } from "@acme/db";
 import { type inferAsyncReturnType } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { getAuth } from "@clerk/nextjs/server";
@@ -22,7 +22,7 @@ type AuthContextProps = {
 export const createContextInner = async ({ auth }: AuthContextProps) => {
   return {
     auth,
-    prisma,
+    db,
   };
 };
 

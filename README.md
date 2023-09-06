@@ -28,7 +28,7 @@ packages
  ├─ api
  |   └─ tRPC v10 router definition
  └─ db
-     └─ typesafe db-calls using Prisma
+     └─ typesafe db-calls
 ```
 
 ## Quick Start
@@ -46,8 +46,6 @@ pnpm i
 # There is an `.env.example` in the root directory you can use for reference
 cp .env.example .env
 
-# Push the Prisma schema to your database
-pnpm db-push
 ```
 
 ### Configure Expo app
@@ -90,10 +88,6 @@ const CLERK_PUBLISHABLE_KEY = "your-clerk-publishable-key";
 ### Next.js
 
 > Note if you are building locallly you will need to insert your env correctly, for example using `pnpm with-env next build`
-
-#### Prerequisites
-
-_We do not recommend deploying a SQLite database on serverless environments since the data wouldn't be persisted. I provisioned a quick Postgresql database on [Railway](https://railway.app), but you can of course use any other database provider. Make sure the prisma schema is updated to use the correct database._
 
 #### Deploy to Vercel
 
@@ -155,10 +149,10 @@ Deploying your Expo application works slightly differently compared to Next.js o
    const CLERK_PUBLISHABLE_KEY = "your-clerk-publishable-key";
 
    const defineConfig = (_ctx: ConfigContext): ExpoConfig => ({
-      name: "expo",
-      slug: "expo",
-      scheme: "your-app-scheme",
-      // ...
+     name: "expo",
+     slug: "expo",
+     scheme: "your-app-scheme",
+     // ...
    });
    ```
 
@@ -187,9 +181,9 @@ Deploying your Expo application works slightly differently compared to Next.js o
    $ eas update:configure
    ```
 
-6. Before we can send out updates to your app, you have to create a new build and submit it to the app stores. For every change that includes native APIs, you have to rebuild the app and submit the update to the app stores. See steps 2 and 3.
+7. Before we can send out updates to your app, you have to create a new build and submit it to the app stores. For every change that includes native APIs, you have to rebuild the app and submit the update to the app stores. See steps 2 and 3.
 
-7. Now that everything is ready for updates, let's create a new update for `production` builds. With the `--auto` flag, EAS Update uses your current git branch name and commit message for this update. See [How EAS Update works](https://docs.expo.dev/eas-update/how-eas-update-works/#publishing-an-update) for more information.
+8. Now that everything is ready for updates, let's create a new update for `production` builds. With the `--auto` flag, EAS Update uses your current git branch name and commit message for this update. See [How EAS Update works](https://docs.expo.dev/eas-update/how-eas-update-works/#publishing-an-update) for more information.
 
    ```bash
    $ cd apps/expo
@@ -198,7 +192,7 @@ Deploying your Expo application works slightly differently compared to Next.js o
 
    > Your OTA (Over The Air) updates must always follow the app store's rules. You can't change your app's primary functionality without getting app store approval. But this is a fast way to update your app for minor changes and bug fixes.
 
-8. Done! Now that you have created your production build, submitted it to the stores, and installed EAS Update, you are ready for anything!
+9. Done! Now that you have created your production build, submitted it to the stores, and installed EAS Update, you are ready for anything!
 
 ## References
 

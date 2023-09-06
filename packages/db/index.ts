@@ -1,22 +1,17 @@
-import { PrismaClient } from "@prisma/client";
+import { Client } from "@planetscale/database";
+import { drizzle } from "drizzle-orm/planetscale-serverless";
 
-declare global {
-  // allow global `var` declarations
-  // eslint-disable-next-line no-var
-  var prisma: PrismaClient | undefined;
-}
+import * as auth from "./schema/auth";
+import * as post from "./schema/post";
 
-export const prisma =
-  global.prisma ||
-  new PrismaClient({
-    log:
-      process.env.NODE_ENV === "development"
-        ? ["query", "error", "warn"]
-        : ["error"],
-  });
+export const schema = { ...auth, ...post };
+export { mySqlTable as tableCreator } from "./schema/_table";
 
-export * from "@prisma/client";
+export * from "drizzle-orm";
 
-if (process.env.NODE_ENV !== "production") {
-  global.prisma = prisma;
-}
+export const db = drizzle(
+  new Client({
+    url: process.env.DATABASE_URL,
+  }).connection(),
+  { schema },
+);
